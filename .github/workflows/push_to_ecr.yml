@@ -47,7 +47,7 @@ jobs:
         IMAGE_TAG: v1.0
       run: |
         # Docker build
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f docker/dockerfile_mysql /docker
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f docker/dockerfile_mysql docker/
         # Unit test
         docker run -d -p 81:81 --name mysqlapp $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         docker ps
