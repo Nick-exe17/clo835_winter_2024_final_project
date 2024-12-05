@@ -50,7 +50,8 @@ resource "aws_instance" "CLO835_final_project_ec2_linux" {
 
   vpc_security_group_ids = [
     module.ec2_sg.security_group_id,
-    module.dev_ssh_sg.security_group_id
+    module.dev_ssh_sg.security_group_id,
+    aws_security_group.ec2_sg.id
   ]
 
   associate_public_ip_address = false
@@ -83,6 +84,23 @@ resource "aws_instance" "CLO835_final_project_ec2_linux" {
 resource "aws_key_pair" "key_pair_final" {
   key_name   = "CLO835_final_project"
   public_key = file("${local.name_prefix}.pub")
+}
+
+# security group creation
+resource "aws_security_group" "ec2_sg" {
+  name        = "CLO835_final_project_security_group"
+  description = "Security group for CLO835 final project"
+
+  vpc_id = data.aws_vpc.default.id
+
+  ingress {
+    description      = "HTTP from everywhere"
+    from_port        = 81
+    to_port          = 81
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
 }
 
 #ECR repositories
