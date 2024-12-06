@@ -5,7 +5,7 @@ import random
 import argparse
 import boto3
 
-BUCKET = "clo835-final-project-bucket"
+BUCKET = "clo835-final-project-group-05-bucket"
 
 
 app = Flask(__name__)
